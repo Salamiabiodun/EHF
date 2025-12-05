@@ -6,9 +6,29 @@
     <title>Vocational Training</title>
 </head>
 <body>
-    <div class="vocational-training-card">
-        <h2>Vocational Training</h2>
-        <p>This card focuses on fashion skills.</p>
+    <!-- Sponsor Section -->
+    <div class="paystack-section" style="padding: 2em; background: #f9f9f9; margin-bottom: 2em;">
+        <h3>Sponsor a Student</h3>
+        <form id="paystack-sponsor-form" onsubmit="event.preventDefault(); payWithPaystackSponsor();">
+            <input type="email" id="sponsor-email" placeholder="Your Email" required>
+            <input type="number" id="sponsor-amount" placeholder="Amount (NGN)" required min="100">
+            <button type="submit">Sponsor with Paystack</button>
+        </form>
+    </div>
+
+    <!-- Donate Section -->
+    <div class="paystack-donate-section" style="padding: 2em; background: #f4fff4; margin-bottom: 2em;">
+        <h3>Donate Now</h3>
+        <form id="paystack-donate-form" onsubmit="event.preventDefault(); payWithPaystackDonate();">
+            <input type="email" id="donate-email" placeholder="Your Email" required>
+            <input type="number" id="donate-amount" placeholder="Amount (NGN)" required min="100">
+            <button type="submit">Donate with Paystack</button>
+        </form>
+    </div>
+
+    <!-- Service (Fashion Vocational Training) Section -->
+    <div class="vocational-training-card" style="padding: 2em; background: #f9f1ff;">
+        <h2>Fashion Vocational Training</h2>
         <ul>
             <li>Fashion Design</li>
             <li>Tailoring</li>
@@ -16,6 +36,66 @@
             <li>Pattern Making</li>
             <li>Textile Selection</li>
         </ul>
+        <form id="paystack-service-form" onsubmit="event.preventDefault(); payWithPaystackService();">
+            <input type="email" id="service-email" placeholder="Your Email" required>
+            <input type="number" id="service-amount" placeholder="Amount (NGN)" required min="100">
+            <button type="submit">Sponsor Service with Paystack</button>
+        </form>
     </div>
+
+    <!-- Paystack Inline Script: Place before closing body tag -->
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script>
+    function payWithPaystackSponsor(){
+      let handler = PaystackPop.setup({
+        key: 'pk_live_81a1f6a24f6c255e5a6297cadc702d104af7b4fe',
+        email: document.getElementById('sponsor-email').value,
+        amount: document.getElementById('sponsor-amount').value * 100,
+        currency: 'NGN',
+        ref: 'SPONSOR-' + Math.floor((Math.random() * 1000000000) + 1),
+        callback: function(response){
+          alert('Thank you for sponsoring! Reference: ' + response.reference);
+        },
+        onClose: function(){
+          alert('Sponsor payment window closed.');
+        }
+      });
+      handler.openIframe();
+    }
+
+    function payWithPaystackDonate(){
+      let handler = PaystackPop.setup({
+        key: 'pk_live_81a1f6a24f6c255e5a6297cadc702d104af7b4fe',
+        email: document.getElementById('donate-email').value,
+        amount: document.getElementById('donate-amount').value * 100,
+        currency: 'NGN',
+        ref: 'DONATE-' + Math.floor((Math.random() * 1000000000) + 1),
+        callback: function(response){
+          alert('Thank you for your donation! Reference: ' + response.reference);
+        },
+        onClose: function(){
+          alert('Donate payment window closed.');
+        }
+      });
+      handler.openIframe();
+    }
+
+    function payWithPaystackService(){
+      let handler = PaystackPop.setup({
+        key: 'pk_live_81a1f6a24f6c255e5a6297cadc702d104af7b4fe',
+        email: document.getElementById('service-email').value,
+        amount: document.getElementById('service-amount').value * 100,
+        currency: 'NGN',
+        ref: 'SERVICE-' + Math.floor((Math.random() * 1000000000) + 1),
+        callback: function(response){
+          alert('Thank you for sponsoring a service! Reference: ' + response.reference);
+        },
+        onClose: function(){
+          alert('Service payment window closed.');
+        }
+      });
+      handler.openIframe();
+    }
+    </script>
 </body>
 </html>
